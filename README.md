@@ -56,7 +56,7 @@ To set up the database schema, run the migrations:
 
 # API Documentation
 
-**Endpoint 1: Data Ingestion**
+## Endpoint 1: Data Ingestion
 
 - **URL:** `/data/`
 
@@ -75,11 +75,28 @@ To set up the database schema, run the migrations:
 }
 ```
 
+- **Example `curl` request**
+  
+```
+curl -X POST http://localhost:8000/data/ \
+     -H "Content-Type: application/json" \
+     -d '{
+           "device_id": "12345",
+           "timestamp": "2023-11-06T12:00:00Z",
+           "location": { "lat": 40.7128, "lon": -74.0060 },
+           "speed": 15.2
+         }'
+```
+
+
+
 **Response:**
 - `202 ACCEPTED: { "status": "Data has been queued" }`
 - `400 BAD REQUEST: { "error": "Validation errors" }`
 
-**Endpoint 2: Data Retrieval by Date Range**
+  
+
+## Endpoint 2: Data Retrieval by Date Range
 
 - **URL:** /data/range/
   
@@ -91,19 +108,32 @@ To set up the database schema, run the migrations:
   - `device_id`: The device identifier.
   - `start_date`: Start of the date range in ISO 8601 format.
   - `end_date`: End of the date range in ISO 8601 format.
+ 
+- **Example `curl` request**
+  
+```
+curl -X GET "http://localhost:8000/data/range/?device_id=12345&start_date=2024-11-06T00:00:00Z&end_date=2024-11-07T00:00:00Z"
+```
     
 - **Response**:
   - `200 OK`: JSON array of data objects.
   - `400 BAD REQUEST: { "error": "Validation errors" }`
 
 
-**Endpoint 3: Get Latest Data for a Device**
+
+## Endpoint 3: Get Latest Data for a Device
 
 - **URL**: /data/latest/<device_id>/
   
 - **Method**: GET
   
 - **Description**: Retrieves the latest data entry for the specified device.
+
+- **Example `curl` request**
+  
+```
+curl -X GET http://localhost:8000/data/latest/12345/
+```
   
 - **Response**:
   - `200 OK`: JSON object of the latest data entry.
