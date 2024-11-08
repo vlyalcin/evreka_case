@@ -54,6 +54,22 @@ To set up the database schema, run the migrations:
 
 ```docker-compose exec web python manage.py migrate```
 
+# Database Model
+
+```
+class DeviceData(models.Model):
+    device_id = models.CharField(max_length=100)    
+    timestamp = models.DateTimeField() 
+    location = models.JSONField()                   
+    speed = models.FloatField(null=True, blank=True) 
+```
+**Field Summary** 
+
+- **device_id**: Unique identifier for each device.
+- **timestamp**: Date and time of the data record.
+- **location**: JSON field storing latitude and longitude.
+- **speed**: Optional field storing speed in meters per second.
+
 # API Documentation
 
 ## Endpoint 1: Data Ingestion
